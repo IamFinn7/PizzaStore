@@ -1,0 +1,59 @@
+﻿@page
+@model PizzaStore.Pages.Authen.LoginModel
+@{
+    ViewData["Title"] = "Pizza Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/login.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
+        <ul class="navbar">
+            <li><a asp-area="" asp-page="/Index">Home</a></li>
+            <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
+            <li><a asp-area="" asp-page="/Authen/Login">Login</a></li>
+        </ul>
+    </header>
+
+    <section>
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Login</h2>
+                <form method="post">
+                    <div class="input-group">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" required />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="input-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input asp-for="Password" type="password" class="form-control" required />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                </form>
+                <p class="register-link">
+                    Don't have an account? <a asp-area="" asp-page="/Authen/Register">Register here</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

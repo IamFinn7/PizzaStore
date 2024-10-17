@@ -1,0 +1,51 @@
+﻿@page
+@model PizzaStore.Pages.Product.MenuModel
+@{
+    ViewData["Title"] = "Menu - Food Website";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/menu.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo"></a>
+        <ul class="navbar">
+            <li><a asp-area="" asp-page="/Index">Home</a></li>
+            <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
+            <li><a asp-area="" asp-page="/Authen/Login">Login</a></li>
+        </ul>
+    </header>
+
+    <section class="menu" id="menu">
+        <div class="main-text">
+            <h2>Most Popular Pizza</h2>
+            <p>We have selected for You<br> the most exquisite tastes around the world</p>
+        </div>
+        <div class="menu-content">
+            @foreach (var product in Model.Products)
+            {
+                <div class="menu-item">
+                    <img src="@product.ProductImage" alt="@product.ProductName">
+                    <div class="menu-text">
+                        <h4>@product.ProductName</h4>
+                        <h5>@String.Format("${0:F2}", product.UnitPrice)</h5>
+                    </div>
+                    <button class="add-to-cart">Add to Cart</button>
+                </div>
+            }
+        </div>
+    </section>
+
+</body>
+</html>

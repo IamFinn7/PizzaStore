@@ -1,0 +1,65 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home - Pizza Website";
+    var isStaff = User.IsInRole("Staff");
+    var isUser = User.IsInRole("Member");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/home.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
+        <ul class="navbar">
+            <li><a asp-area="" asp-page="/Index">Home</a></li>
+            <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
+          
+                @if (isStaff)
+                {
+                    <li><a asp-area="" asp-page="/Staff/Dashboard">Dashboard</a></li>
+                    <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
+                }
+                else if (isUser)
+                {
+                <li>
+                    <a asp-area="" asp-page="/Member/Dashboard">
+                        <i class="bx bx-cart"></i>
+                        Cart
+                    </a>
+                </li>
+                    <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
+                }
+                else
+                {
+                    <li><a asp-area="" asp-page="/Authen/Login">Login</a></li>
+                }
+        </ul>
+    </header>
+    <section class="home">
+        <div class="home-text">
+            <h1><span>Welcome</span> to the World of Tasty & Fresh Pizza</h1>
+            <p>
+                Enjoy our delicious pizzas made with fresh ingredients
+            </p>
+            <p>
+                Discover classic favorites and exciting new flavors
+            </p>
+            <a href="#" class="btn">Choose a Pizza</a>
+        </div>
+        <div class="home-img">
+            <img src="~/img/home.png" alt="home" />
+        </div>
+    </section>
+</body>
+</html>
