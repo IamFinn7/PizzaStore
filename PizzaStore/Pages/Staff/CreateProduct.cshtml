@@ -1,0 +1,83 @@
+﻿@page
+@model PizzaStore.Pages.Staff.CreateProductModel
+@{
+    ViewData["Title"] = "Create Pizza - Food Website";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/menuStaff.css">
+    <link rel="stylesheet" href="~/css/createPizza.css"> 
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo"></a>
+        <ul class="navbar">
+            <li><a asp-area="" asp-page="/Index">Home</a></li>
+            <li><a asp-area="" asp-page="/Staff/MenuStaff">Menu</a></li>
+            <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
+        </ul>
+    </header>
+
+    <section class="menu" id="menu">
+        <div class="main-text">
+            <div class="header-container">
+                <a href="/Staff/MenuStaff" class="back-link">Back to Menu</a>
+                <h2>Create New Product</h2>
+            </div>
+            <p>Please fill out the form below to create a new product.</p>
+        </div>
+        <div class="form-content">
+            <form method="post">
+                <div class="input-group">
+                    <label asp-for="ProductVMs.ProductName" class="control-label">Product Name:</label>
+                    <input asp-for="ProductVMs.ProductName" class="form-control" />
+                    <span asp-validation-for="ProductVMs.ProductName" class="text-danger"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="ProductVMs.QuantityPerUnit" class="control-label">Quantity:</label>
+                    <input asp-for="ProductVMs.QuantityPerUnit" class="form-control" />
+                    <span asp-validation-for="ProductVMs.QuantityPerUnit" class="text-danger"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="ProductVMs.UnitPrice" class="control-label">Price:</label>
+                    <input asp-for="ProductVMs.UnitPrice" class="form-control" />
+                    <span asp-validation-for="ProductVMs.UnitPrice" class="text-danger"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="ProductVMs.Category.CategoryName" class="control-label">Category:</label>
+                    <div class="dropdown">
+                        <select asp-for="ProductVMs.CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label asp-for="ProductVMs.Supplier.CompanyName" class="control-label">Supplier:</label>
+                    <div class="dropdown">
+                        <select asp-for="ProductVMs.SupplierID" class="form-control" asp-items="ViewBag.SupplierID"></select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label asp-for="File" class="control-label">Image:</label>
+                    <input asp-for="File" type="file" class="form-control" />
+                </div>
+                <button type="submit">Create Pizza</button>
+            </form>
+        </div>
+    </section>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

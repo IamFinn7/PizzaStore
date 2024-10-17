@@ -1,0 +1,122 @@
+﻿body {
+    background: #fffbf6;
+}
+
+header {
+    background: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-text {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+.back-link {
+    margin-left: 10px;
+    margin-right: auto; 
+    color: #007bff; 
+    text-decoration: none; 
+}
+
+.back-link:hover {
+    text-decoration: underline; 
+}
+
+h2 {
+    margin: 0;
+    flex-grow: 1; 
+    text-align: center; 
+}
+
+.form-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+form {
+    background: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 500px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #302e29;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+    input:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+    button[type="submit"]:hover {
+        background: #0056b3;
+    }
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="%23002e5d" d="M1 4l7 7 7-7H1z"/></svg>') no-repeat right 10px center;
+    background-size: 12px;
+    appearance: none; 
+}
+
+    select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.back-link {
+    display: block;
+    margin-bottom: 10px; 
+    color: #007bff; 
+    font-size: 14px; 
+    text-decoration: none; 
+}
+
+    .back-link:hover {
+        text-decoration: underline;
+    }

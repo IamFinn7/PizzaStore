@@ -10,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/css/login.css" />
+    <link rel="stylesheet" href="~/css/register.css" />
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
 
     <section>
         <div class="login-container">
-            <div class="login-box">
+            <div class="login-box" style="margin-bottom: 10px">
                 <h2>Register</h2>
                 <form method="post">
                     <div class="input-group">
@@ -46,6 +46,11 @@
                         <input asp-for="Account.Password" type="password" class="form-control" required />
                         <span asp-validation-for="Account.Password" class="text-danger"></span>
                     </div>
+                    <div class="input-group">
+                        <label for="ConfirmPassword" class="control-label">Confirm Password</label>
+                        <input name="ConfirmPassword" type="password" class="form-control" required />
+                        <span class="text-danger"></span>
+                    </div>
                     <button type="submit" class="btn">Register</button>
                 </form>
                 <p class="register-link">
@@ -60,5 +65,62 @@
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
     }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const usernameInput = document.querySelector('input[name="Account.UserName"]');
+            const usernameWarning = document.createElement('span');
+            usernameInput.parentNode.appendChild(usernameWarning);
+
+            let isUsernameValid = true;
+
+            usernameInput.addEventListener('blur', function () {
+                const username = usernameInput.value;
+
+                if (username) {
+                    fetch(`/Authen/Register?handler=CheckUserName&username=${username}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data) {
+                                usernameWarning.textContent = `Username ${username} is already exists.`;
+                                usernameWarning.style.color = 'red';
+                                usernameWarning.style.fontSize = '14px';
+                                isUsernameValid = false;
+                            } else {
+                                usernameWarning.textContent = '';
+                                isUsernameValid = true;
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
+                } else {
+                    usernameWarning.textContent = '';
+                    isUsernameValid = true;
+                }
+            });
+
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                const password = document.querySelector('input[name="Account.Password"]').value;
+                const confirmPassword = document.querySelector('input[name="ConfirmPassword"]').value;
+
+                if (!isUsernameValid) {
+                    event.preventDefault();
+                    alert("Account already exists.");
+                    return;
+                }
+
+                if (password !== confirmPassword) {
+                    event.preventDefault();
+                    alert("Passwords do not match. Please check again.");
+                } else {
+                    alert("Account created successfully!");
+
+                    setTimeout(() => {
+                        form.submit();
+                    }, 1000);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

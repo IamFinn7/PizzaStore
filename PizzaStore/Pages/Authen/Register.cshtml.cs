@@ -40,7 +40,13 @@ namespace PizzaStore.Pages.Authen
             _context.Accounts.Add(accountDto);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Authen/Login");
+        }
+
+        public async Task<IActionResult> OnGetCheckUserName(string username)
+        {
+            var exists = await _context.Accounts.AnyAsync(it => it.UserName == username);
+            return new JsonResult(!exists);
         }
     }
 }

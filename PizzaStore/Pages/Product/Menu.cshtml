@@ -2,6 +2,7 @@
 @model PizzaStore.Pages.Product.MenuModel
 @{
     ViewData["Title"] = "Menu - Food Website";
+    var isUser = User.IsInRole("Member");
 }
 
 <!DOCTYPE html>
@@ -23,7 +24,21 @@
         <ul class="navbar">
             <li><a asp-area="" asp-page="/Index">Home</a></li>
             <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
-            <li><a asp-area="" asp-page="/Authen/Login">Login</a></li>
+
+            @if (isUser)
+            {
+                <li>
+                    <a asp-area="" asp-page="/Member/Dashboard">
+                        <i class="bx bx-cart"></i>
+                        Cart
+                    </a>
+                </li>
+                <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
+            }
+            else
+            {
+                <li><a asp-area="" asp-page="/Authen/Login">Login</a></li>
+            }
         </ul>
     </header>
 

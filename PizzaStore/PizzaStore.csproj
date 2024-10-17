@@ -8,9 +8,17 @@
 
   <ItemGroup>
     <Compile Remove="Areas\**" />
+    <Compile Remove="Pages\OrderDetail\**" />
+    <Compile Remove="Pages\Order\**" />
     <Content Remove="Areas\**" />
+    <Content Remove="Pages\OrderDetail\**" />
+    <Content Remove="Pages\Order\**" />
     <EmbeddedResource Remove="Areas\**" />
+    <EmbeddedResource Remove="Pages\OrderDetail\**" />
+    <EmbeddedResource Remove="Pages\Order\**" />
     <None Remove="Areas\**" />
+    <None Remove="Pages\OrderDetail\**" />
+    <None Remove="Pages\Order\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,9 +43,6 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Pages\NewFolder\" />
-    <Folder Include="Pages\OrderDetail\" />
-    <Folder Include="Pages\Order\" />
     <Folder Include="Utility\Momo\Config\" />
     <Folder Include="Utility\Momo\Lib\" />
     <Folder Include="Utility\Momo\Response\" />

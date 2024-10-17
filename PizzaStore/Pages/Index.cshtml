@@ -23,15 +23,14 @@
         <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
         <ul class="navbar">
             <li><a asp-area="" asp-page="/Index">Home</a></li>
-            <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
-          
                 @if (isStaff)
                 {
-                    <li><a asp-area="" asp-page="/Staff/Dashboard">Dashboard</a></li>
+                    <li><a asp-area="" asp-page="/Staff/MenuStaff">Menu</a></li>
                     <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
                 }
                 else if (isUser)
                 {
+                <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
                 <li>
                     <a asp-area="" asp-page="/Member/Dashboard">
                         <i class="bx bx-cart"></i>
@@ -42,6 +41,7 @@
                 }
                 else
                 {
+                    <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
                     <li><a asp-area="" asp-page="/Authen/Login">Login</a></li>
                 }
         </ul>
@@ -55,7 +55,14 @@
             <p>
                 Discover classic favorites and exciting new flavors
             </p>
-            <a href="#" class="btn">Choose a Pizza</a>
+            @if (isStaff)
+            {
+                <a asp-area="" asp-page="/Staff/MenuStaff" class="btn">Choose a Pizza</a>
+            }
+            else
+            {
+                <a asp-area="" asp-page="/Product/Menu" class="btn">Choose a Pizza</a>
+            }
         </div>
         <div class="home-img">
             <img src="~/img/home.png" alt="home" />
