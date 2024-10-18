@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <header>
+   @*  <header>
         <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
         <ul class="navbar">
             <li><a asp-area="" asp-page="/Index">Home</a></li>
@@ -30,7 +30,7 @@
                 <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
             }
         </ul>
-    </header>
+    </header> *@
 
     <section class="menu" id="menu">
         <div class="main-text">
@@ -49,9 +49,11 @@
                 </div>
                 <div class="input-group">
                     <label asp-for="Account.Password" class="control-label">Password:</label>
-                    <input asp-for="Account.Password" class="form-control" type="password" />
+                    <input asp-for="Account.Password" class="form-control" id="passwordInput"/>
                     <span asp-validation-for="Account.Password" class="text-danger"></span>
+                    <button type="button" class="btn btn-secondary" onclick="togglePasswordVisibility()">Show</button>
                 </div>
+
                 <div class="input-group">
                     <label asp-for="Account.FullName" class="control-label">Full Name:</label>
                     <input asp-for="Account.FullName" class="form-control" />
@@ -69,3 +71,17 @@
     }
 </body>
 </html>
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('passwordInput');
+        var button = event.currentTarget;
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            button.textContent = "Hide";
+        } else {
+            passwordInput.type = "password";
+            button.textContent = "Show";
+        }
+    }
+</script>

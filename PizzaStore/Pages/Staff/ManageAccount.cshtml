@@ -1,4 +1,5 @@
 ﻿@page
+@using PizzaStore.Helpers
 @model PizzaStore.Pages.Staff.ManageAccountModel
 
 @{
@@ -19,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <header>
+@*     <header>
         <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
         <ul class="navbar">
             <li><a asp-area="" asp-page="/Index">Home</a></li>
@@ -30,7 +31,7 @@
                 <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
             }
         </ul>
-    </header>
+    </header> *@
 
     <section class="home">
         <h1>Manage Accounts</h1>
@@ -50,7 +51,11 @@
                     {
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.UserName)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Password)</td>
+                            <td style="width : 200px">
+                                <span class="password" style="display: none;">@Html.DisplayFor(modelItem => item.Password)</span>
+                                <span class="hidden-password">@GetPass.GetMaskedPassword(item.Password)</span>
+                                <button class="btn-show-password" onclick="togglePassword(this)">Show</button>
+                            </td>
                             <td>@Html.DisplayFor(modelItem => item.FullName)</td>
                             <td>@Html.DisplayFor(modelItem => item.Type)</td>
                             <td style="width: 15%">
@@ -74,3 +79,19 @@
     </section>
 </body>
 </html>
+<script>
+    function togglePassword(button) {
+        var passwordSpan = button.previousElementSibling;
+        var hiddenPasswordSpan = button.previousElementSibling.previousElementSibling;
+
+        if (passwordSpan.style.display === "none") {
+            passwordSpan.style.display = "inline";
+            hiddenPasswordSpan.style.display = "none";
+            button.textContent = "Hide";
+        } else {
+            passwordSpan.style.display = "none";
+            hiddenPasswordSpan.style.display = "inline";
+            button.textContent = "Show";
+        }
+    }
+</script>
