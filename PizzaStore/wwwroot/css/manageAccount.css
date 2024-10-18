@@ -1,15 +1,4 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Raleway", sans-serif;
-}
-
-body {
-    background: #fffbf6;
-}
-
-header {
+﻿header {
     background: #fff;
     padding: 15px;
     display: flex;
@@ -22,16 +11,16 @@ header {
     display: flex;
 }
 
-    .navbar li {
-        margin: 0 15px;
-    }
+.navbar li {
+    margin: 0 15px;
+}
 
-    .navbar a {
-        text-decoration: none;
-        color: #302e29;
-    }
+.navbar a {
+    text-decoration: none;
+    color: #302e29;
+}
 
-.home {
+.managerAccountHome {
     padding: 30px 20px;
     text-align: center;
 }
@@ -39,6 +28,7 @@ header {
 .table-container {
     width: 85%;
     margin: 0 auto;
+    height: 500px;
 }
 
 .table {

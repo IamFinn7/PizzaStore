@@ -1,5 +1,13 @@
 html {
-  font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -12,25 +20,22 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+body {
+    margin-bottom: 60px;
+    background: #fffbf6;
 }
 
-body {
-  margin-bottom: 60px;
-}
 .nav-link:hover {
-    background-color: #f8f9fa; /* Màu n?n khi hover */
-    color: #007bff; /* Màu ch? khi hover */
+    background-color: #f8f9fa;
+    color: #007bff; 
 }
 
 #cart-item-count {
-    font-size: 1.2rem; /* Kích th??c ch? l?n h?n */
-    font-weight: bold; /* Ch? ??m */
-    padding: 0.3rem 0.6rem; /* Padding tùy ch?nh */
-    background-color: #dc3545; /* Màu n?n c?a badge */
-    color: white; /* Màu ch? */
+    font-size: 1.2rem; 
+    font-weight: bold; 
+    padding: 0.3rem 0.6rem; 
+    background-color: #dc3545; 
+    color: white; 
 }
 
 #popup {

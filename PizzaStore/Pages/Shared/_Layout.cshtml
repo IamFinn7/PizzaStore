@@ -1,6 +1,7 @@
 ﻿@{
     var isStaff = User.IsInRole("Staff");
     var isUser = User.IsInRole("Member");
+    var cartItemCount = HttpContextAccessor.HttpContext.Session.GetInt32("CartItemCount") ?? 0;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -9,10 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PizzaStore</title>
     @inject IHttpContextAccessor HttpContextAccessor
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PizzaStore.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -25,7 +24,7 @@
             <li><a asp-area="" asp-page="/Index">Home</a></li>
             @if (isStaff)
             {
-                <li><a asp-area="" asp-page="/Staff/MenuStaff">Menu</a></li>
+                <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
                 <li><a asp-area="" asp-page="/Staff/ManageAccount">Account</a></li>
                 <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
             }
@@ -34,10 +33,11 @@
                 <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
                 <li><a asp-area="" asp-page="/Staff/ManageAccount">My Account</a></li>
                 <li>
-                    <a asp-area="" asp-page="/Member/Dashboard">
+                    <a asp-area="" asp-page="/cartItem/Cart">
                         <i class="bx bx-cart"></i>
                         Cart
                     </a>
+                    <span id="cart-item-count" class="badge badge-light">@cartItemCount</span>
                 </li>
                 <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
             }
@@ -49,16 +49,16 @@
         </ul>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3" >
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - PizzaStore - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+     <footer class="border-top footer text-muted">
+         <div class="container">
+             &copy; 2024 - PizzaStore - <a asp-area="" asp-page="/Privacy">Privacy</a>
+         </div>
+     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

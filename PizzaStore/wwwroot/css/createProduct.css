@@ -1,15 +1,4 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Raleway", sans-serif;
-}
-
-body {
-    background: #fffbf6;
-}
-
-header {
+﻿header {
     background: #fff;
     padding: 15px;
     display: flex;
@@ -40,46 +29,46 @@ header {
     color: #302e29;
 }
 
-.menu{
+.pizza-menu {
     margin-top: 20px;
 }
 
-.main-text {
+.pizza-main-text {
     text-align: center;
     margin-bottom: 10px;
 }
 
-.header-container {
+.pizza-header-container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.back-link {
+.pizza-back-link {
     margin-left: 10px;
     margin-right: auto;
     color: #007bff;
     text-decoration: none;
 }
 
-    .back-link:hover {
-        text-decoration: underline;
-    }
+.pizza-back-link:hover {
+    text-decoration: underline;
+}
 
-h2 {
+.pizza-main-text h2 {
     margin: 0;
     flex-grow: 1;
     text-align: center;
 }
 
-.form-content {
+.pizza-form-content {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
 }
 
-form {
+.pizza-form-content form {
     background: #fff;
     border-radius: 8px;
     padding: 30px;
@@ -87,17 +76,17 @@ form {
     width: 500px;
 }
 
-.input-group {
+.pizza-input-group {
     margin-bottom: 20px;
 }
 
-label {
+.pizza-input-group label {
     display: block;
     margin-bottom: 5px;
     color: #302e29;
 }
 
-input {
+.pizza-form-control {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
@@ -105,12 +94,12 @@ input {
     font-size: 14px;
 }
 
-    input:focus {
-        border-color: #007bff;
-        outline: none;
-    }
+.pizza-form-control:focus {
+    border-color: #007bff;
+    outline: none;
+}
 
-button[type="submit"] {
+.pizza-submit-button {
     width: 100%;
     padding: 12px;
     background: #007bff;
@@ -122,11 +111,11 @@ button[type="submit"] {
     transition: background 0.3s;
 }
 
-    button[type="submit"]:hover {
-        background: #0056b3;
-    }
+.pizza-submit-button:hover {
+    background: #0056b3;
+}
 
-select {
+.pizza-input-group select {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
@@ -137,22 +126,8 @@ select {
     appearance: none;
 }
 
-select:focus {
+.pizza-input-group select:focus {
     border-color: #007bff;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.back-link {
-    display: block;
-    margin-bottom: 10px;
-    color: #007bff;
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-.back-link:hover {
-    text-decoration: underline;
-    color: #0056b3;
 }

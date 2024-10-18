@@ -18,55 +18,46 @@
 </head>
 <body>
 
-@*     <header>
-        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo"></a>
-        <ul class="navbar">
-            <li><a asp-area="" asp-page="/Index">Home</a></li>
-            <li><a asp-area="" asp-page="/Staff/MenuStaff">Menu</a></li>
-            <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
-        </ul>
-    </header> *@
-
-    <section class="menu" id="menu">
-        <div class="main-text">
+    <section class="pizza-menu" id="menu">
+        <div class="pizza-main-text">
             <h2>Create New Product</h2>
             <p>Please fill out the form below to create a new product.</p>
-            <a href="/Staff/MenuStaff" class="back-link">Back to Menu</a>
+            <a href="/Staff/MenuStaff" class="pizza-back-link">Back to Menu</a>
         </div>
-        <div class="form-content">
+        <div class="pizza-form-content">
             <form method="post" enctype="multipart/form-data">
-                <div class="input-group">
+                <div class="pizza-input-group">
                     <label asp-for="ProductVMs.ProductName" class="control-label">Product Name:</label>
-                    <input asp-for="ProductVMs.ProductName" class="form-control" />
+                    <input asp-for="ProductVMs.ProductName" class="pizza-form-control" />
                     <span asp-validation-for="ProductVMs.ProductName" class="text-danger"></span>
                 </div>
-                <div class="input-group">
+                <div class="pizza-input-group">
                     <label asp-for="ProductVMs.QuantityPerUnit" class="control-label">Quantity:</label>
-                    <input asp-for="ProductVMs.QuantityPerUnit" class="form-control" />
+                    <input asp-for="ProductVMs.QuantityPerUnit" class="pizza-form-control" />
                     <span asp-validation-for="ProductVMs.QuantityPerUnit" class="text-danger"></span>
                 </div>
-                <div class="input-group">
+                <div class="pizza-input-group">
                     <label asp-for="ProductVMs.UnitPrice" class="control-label">Price:</label>
-                    <input asp-for="ProductVMs.UnitPrice" class="form-control" />
+                    <input asp-for="ProductVMs.UnitPrice" class="pizza-form-control" />
                     <span asp-validation-for="ProductVMs.UnitPrice" class="text-danger"></span>
                 </div>
-                <div class="input-group">
+                <div class="pizza-input-group">
                     <label asp-for="ProductVMs.Category.CategoryName" class="control-label">Category:</label>
                     <div class="dropdown">
-                        <select asp-for="ProductVMs.CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
+                        <select asp-for="ProductVMs.CategoryID" class="pizza-form-control" asp-items="ViewBag.CategoryID"></select>
                     </div>
                 </div>
-                <div class="input-group">
+                <div class="pizza-input-group">
                     <label asp-for="ProductVMs.Supplier.CompanyName" class="control-label">Supplier:</label>
                     <div class="dropdown">
-                        <select asp-for="ProductVMs.SupplierID" class="form-control" asp-items="ViewBag.SupplierID"></select>
+                        <select asp-for="ProductVMs.SupplierID" class="pizza-form-control" asp-items="ViewBag.SupplierID"></select>
                     </div>
                 </div>
-                <div class="input-group">
+                <div class="pizza-input-group">
                     <label asp-for="File" class="control-label"></label>
-                    <input asp-for="File" type="file" class="form-control" />
+                    <input asp-for="File" type="file" class="pizza-form-control" />
                 </div>
-                <button type="submit">Create Pizza</button>
+                <button type="submit" class="pizza-submit-button">Create Pizza</button>
             </form>
         </div>
     </section>

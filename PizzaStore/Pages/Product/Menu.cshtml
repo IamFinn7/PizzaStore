@@ -2,6 +2,7 @@
 @model PizzaStore.Pages.Product.MenuModel
 @{
     ViewData["Title"] = "Menu - Food Website";
+    var isStaff = User.IsInRole("Staff");
     var isUser = User.IsInRole("Member");
 }
 
@@ -18,49 +19,137 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
-    <header>
-        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo"></a>
-        <ul class="navbar">
-            <li><a asp-area="" asp-page="/Index">Home</a></li>
-            <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
-
-            @if (isUser)
-            {
-                <li>
-                    <a asp-area="" asp-page="/Member/Dashboard">
-                        <i class="bx bx-cart"></i>
-                        Cart
-                    </a>
-                </li>
-                <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
-            }
-            else
-            {
-                <li><a asp-area="" asp-page="/Authen/Login">Login</a></li>
-            }
-        </ul>
-    </header>
-
+    
     <section class="menu" id="menu">
-        <div class="main-text">
-            <h2>Most Popular Pizza</h2>
-            <p>We have selected for You<br> the most exquisite tastes around the world</p>
-        </div>
-        <div class="menu-content">
-            @foreach (var product in Model.Products)
-            {
-                <div class="menu-item">
-                    <img src="@product.ProductImage" alt="@product.ProductName">
-                    <div class="menu-text">
-                        <h4>@product.ProductName</h4>
-                        <h5>@String.Format("${0:F2}", product.UnitPrice)</h5>
+        @if (isStaff)
+        {
+            <div class="createProduct">
+                <a href="/Staff/CreateProduct" class="createProductBtn">Create New Product</a>
+            </div>
+            <div class="menu-content">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="menu-item">
+                        <img src="@product.ProductImage" alt="@product.ProductName">
+                        <div class="menu-text">
+                            <h5>@product.ProductName</h5>
+                            <h6>@String.Format("${0:F2}", product.UnitPrice)</h6>
+                        </div>
+                        <button class="edit-button" onclick="openEditPopup('@product.ProductID')">Edit</button>
                     </div>
-                    <button class="add-to-cart">Add to Cart</button>
-                </div>
-            }
-        </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="main-text">
+                <h2>Most Popular Pizza</h2>
+                <p>We have selected for You<br> the most exquisite tastes around the world</p>
+            </div>
+            <div class="menu-content">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="menu-item">
+                        <span class="quantity-label">In Stock: @product.QuantityPerUnit</span>
+                        <img src="@product.ProductImage" alt="@product.ProductName">
+                        <div class="menu-text">
+                            <h5>@product.ProductName</h5>
+                            <h6>@String.Format("${0:F2}", product.UnitPrice)</h6>
+                        </div>
+
+                        <form method="post" asp-page-handler="AddToCart" id="form_@product.ProductID" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#cart-response">
+                            <div class="quantity-container">
+                                <input type="number" name="quantity" id="quantity_@product.ProductID" min="1" value="1" class="quantity-input" />
+                            </div>
+                            <input type="hidden" name="productId" value="@product.ProductID" />
+                            <input type="hidden" id="availableQuantity_@product.ProductID" value="@product.QuantityPerUnit" />
+                            <div class="form-group">
+                                <input type="submit" value="Add to Cart" class="add-to-cart"
+                                @(product.QuantityPerUnit < 1 ? "disabled" : "") />
+                            </div>
+                        </form>
+                    </div>
+                }
+            </div>
+        }
     </section>
 
+    <div id="edit-popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            
+            <span class="close" onclick="closeEditPopup()">&times;</span>
+            <h2>Edit Pizza</h2>
+            <form id="edit-form" method="post">
+                <input type="hidden" id="productId" name="SelectedProduct.ProductID" />
+                <div class="input-group">
+                    <label for="productName">Name:</label>
+                    <input type="text" id="productName" name="SelectedProduct.ProductName" required>
+                </div>
+                <div class="input-group">
+                    <label for="productPrice">Price:</label>
+                    <input type="number" id="productPrice" name="SelectedProduct.UnitPrice" step="0.01" required>
+                </div>
+                <div class="input-group">
+                    <label for="productImage">Image URL:</label>
+                    <input type="text" id="productImage" name="SelectedProduct.ProductImage" required>
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openEditPopup(productId) {
+            console.log("Fetching product with ID:", productId);
+            fetch(`/Product/Menu?handler=Edit&productId=${productId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(product => {
+                    document.getElementById('productId').value = product.productID;
+                    document.getElementById('productName').value = product.productName;
+                    document.getElementById('productPrice').value = product.unitPrice;
+                    document.getElementById('productImage').value = product.productImage;
+
+                    document.getElementById('edit-popup').style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                })
+                .catch(error => {
+                    console.error('Error fetching product:', error);
+                    alert(`Unable to fetch product details. Please try again. Error: ${error.message}`);
+                });
+        }
+
+        function closeEditPopup() {
+            document.getElementById('edit-popup').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const forms = document.querySelectorAll('form[asp-page-handler="AddToCart"]');
+
+        forms.forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                const productId = form.id.split('_')[1];
+                const enteredQuantity = parseInt(document.getElementById('quantity_' + productId).value, 10);
+                const availableQuantity = parseInt(document.getElementById('availableQuantity_' + productId).value, 10);
+                if (enteredQuantity > availableQuantity) {
+                    showPopup("The entered quantity exceeds the available stock!");
+                    event.preventDefault();
+                }
+
+                const addToCartButton = form.querySelector('.add-to-cart');
+                if (availableQuantity < 1) {
+                    addToCartButton.disabled = true;
+                } else {
+                    addToCartButton.disabled = false;
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>

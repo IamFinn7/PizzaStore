@@ -33,7 +33,7 @@
         </ul>
     </header> *@
 
-    <section class="home">
+    <div class="managerAccountHome">
         <h1>Manage Accounts</h1>
         <div class="table-container">
             <table class="table">
@@ -76,22 +76,24 @@
                 <a asp-page="CreateAccount" class="createAccountBtn">Create New Account</a>
             </div>
         </div>
-    </section>
+    </div>
+
+    <script>
+        function togglePassword(button) {
+            var passwordSpan = button.previousElementSibling;
+            var hiddenPasswordSpan = button.previousElementSibling.previousElementSibling;
+
+            if (passwordSpan.style.display === "none") {
+                passwordSpan.style.display = "inline";
+                hiddenPasswordSpan.style.display = "none";
+                button.textContent = "Hide";
+            } else {
+                passwordSpan.style.display = "none";
+                hiddenPasswordSpan.style.display = "inline";
+                button.textContent = "Show";
+            }
+        }
+    </script>
+
 </body>
 </html>
-<script>
-    function togglePassword(button) {
-        var passwordSpan = button.previousElementSibling;
-        var hiddenPasswordSpan = button.previousElementSibling.previousElementSibling;
-
-        if (passwordSpan.style.display === "none") {
-            passwordSpan.style.display = "inline";
-            hiddenPasswordSpan.style.display = "none";
-            button.textContent = "Hide";
-        } else {
-            passwordSpan.style.display = "none";
-            hiddenPasswordSpan.style.display = "inline";
-            button.textContent = "Show";
-        }
-    }
-</script>

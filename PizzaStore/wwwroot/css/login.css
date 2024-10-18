@@ -31,38 +31,39 @@ header {
     color: #302e29;
 }
 
-.login-container {
+.pizza-login-container {
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login-box {
+.pizza-login-box {
     background: #fff;
     padding: 40px;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 400px;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
-h2 {
+.pizza-h2 {
     margin-bottom: 20px;
     text-align: center;
     color: #302e29;
 }
 
-.input-group {
+.pizza-input-group {
     margin-bottom: 20px;
 }
 
-label {
+.pizza-label {
     display: block;
     margin-bottom: 5px;
     color: #302e29;
 }
 
-input {
+.pizza-input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -70,12 +71,12 @@ input {
     font-size: 14px;
 }
 
-input:focus {
+.pizza-input:focus {
     border-color: #ff9100;
     outline: none;
 }
 
-.btn {
+.pizza-btn {
     width: 100%;
     padding: 10px;
     background: #ff9100;
@@ -87,21 +88,21 @@ input:focus {
     transition: background 0.3s;
 }
 
-.btn:hover {
+.pizza-btn:hover {
     background: #e68a00;
 }
 
-.register-link {
+.pizza-register-link {
     text-align: center;
     margin-top: 15px;
 }
 
-.register-link a {
+.pizza-register-link a {
     color: #ff9100;
     text-decoration: underline;
 }
 
-.login-btn {
+.pizza-btn {
     background: #ff9100;
     color: #fff;
     padding: 10px 20px;
@@ -110,6 +111,6 @@ input:focus {
     transition: background 0.3s;
 }
 
-.login-btn:hover {
+.pizza-btn:hover {
     background: #e68a00;
 }
