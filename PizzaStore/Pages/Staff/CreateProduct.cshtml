@@ -18,14 +18,14 @@
 </head>
 <body>
 
-    <header>
+@*     <header>
         <a href="#" class="logo"><img src="~/img/logo.png" alt="logo"></a>
         <ul class="navbar">
             <li><a asp-area="" asp-page="/Index">Home</a></li>
             <li><a asp-area="" asp-page="/Staff/MenuStaff">Menu</a></li>
             <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
         </ul>
-    </header>
+    </header> *@
 
     <section class="menu" id="menu">
         <div class="main-text">
@@ -34,7 +34,7 @@
             <a href="/Staff/MenuStaff" class="back-link">Back to Menu</a>
         </div>
         <div class="form-content">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="input-group">
                     <label asp-for="ProductVMs.ProductName" class="control-label">Product Name:</label>
                     <input asp-for="ProductVMs.ProductName" class="form-control" />
@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="input-group">
-                    <label asp-for="File" class="control-label">Image:</label>
+                    <label asp-for="File" class="control-label"></label>
                     <input asp-for="File" type="file" class="form-control" />
                 </div>
                 <button type="submit">Create Pizza</button>

@@ -31,7 +31,7 @@ namespace PizzaStore.Pages.Staff
             _context.Products.Add(_mapper.Map<Products>(ProductVMs));
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Staff/MenuStaff");
         }
     }
 }
