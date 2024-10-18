@@ -1,0 +1,69 @@
+﻿@page
+@model PizzaStore.Pages.Staff.CreateAccountModel
+
+@{
+    ViewData["Title"] = "Create";
+    bool isStaff = User.IsInRole("Staff");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/createAccount.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
+        <ul class="navbar">
+            <li><a asp-area="" asp-page="/Index">Home</a></li>
+            @if (isStaff)
+            {
+                <li><a asp-area="" asp-page="/Staff/MenuStaff">Menu</a></li>
+                <li><a asp-area="" asp-page="/Staff/ManageAccount">Account</a></li>
+                <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
+            }
+        </ul>
+    </header>
+
+    <section class="menu" id="menu">
+        <div class="main-text">
+            <h2>Create New Account</h2>
+            <p>Please fill out the form below to create a new account.</p>
+            <a asp-page="ManageAccount" class="back-link">Back to List</a>
+        </div>
+        <div class="form-content">
+            <form method="post">
+                <div class="input-group">
+                    <label asp-for="Account.UserName" class="control-label">Username:</label>
+                    <input asp-for="Account.UserName" class="form-control" />
+                    <span asp-validation-for="Account.UserName" class="text-danger"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="Account.Password" class="control-label">Password:</label>
+                    <input asp-for="Account.Password" class="form-control" type="password" />
+                    <span asp-validation-for="Account.Password" class="text-danger"></span>
+                </div>
+                <div class="input-group">
+                    <label asp-for="Account.FullName" class="control-label">Full Name:</label>
+                    <input asp-for="Account.FullName" class="form-control" />
+                    <span asp-validation-for="Account.FullName" class="text-danger"></span>
+                </div>
+                <button type="submit">Create Account</button>
+            </form>
+        </div>
+    </section>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+</body>
+</html>

@@ -164,10 +164,8 @@ button[type="submit"] {
     font-size: 18px;
     font-weight: 500;
     transition: background 0.3s, transform 0.3s;
-/*    background-color: #007bff;*/
 }
 
 .createProductBtn:hover {
     color: #0056b3;
-/*    transform: scale(1.005);*/
 }

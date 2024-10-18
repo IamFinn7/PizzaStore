@@ -1,0 +1,76 @@
+﻿@page
+@model PizzaStore.Pages.Staff.ManageAccountModel
+
+@{
+    ViewData["Title"] = "Manage Accounts";
+    bool isStaff = User.IsInRole("Staff");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/manageAccount.css" />
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
+        <ul class="navbar">
+            <li><a asp-area="" asp-page="/Index">Home</a></li>
+            @if (isStaff)
+            {
+                <li><a asp-area="" asp-page="/Staff/MenuStaff">Menu</a></li>
+                <li><a asp-area="" asp-page="/Staff/ManageAccount">Account</a></li>
+                <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
+            }
+        </ul>
+    </header>
+
+    <section class="home">
+        <h1>Manage Accounts</h1>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Account[0].UserName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Account[0].Password)</th>
+                        <th>@Html.DisplayNameFor(model => model.Account[0].FullName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Account[0].Type)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Account)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Password)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FullName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                            <td style="width: 15%">
+                                <a class="btn" asp-page="EditAccount" asp-route-id="@item.AccountID">Edit</a> |
+                                @if (isStaff)
+                                {
+                                    <form method="post" asp-page-handler="Delete" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this account?');">
+                                        <input type="hidden" name="id" value="@item.AccountID" />
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="createAccountContainer">
+                <a asp-page="CreateAccount" class="createAccountBtn">Create New Account</a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

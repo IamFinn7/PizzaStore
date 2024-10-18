@@ -1,0 +1,102 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+}
+
+body {
+    background: #fffbf6;
+}
+
+header {
+    background: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar {
+    list-style: none;
+    display: flex;
+}
+
+    .navbar li {
+        margin: 0 15px;
+    }
+
+    .navbar a {
+        text-decoration: none;
+        color: #302e29;
+    }
+
+.home {
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.table-container {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+.createAccountContainer {
+    display: flex;
+    justify-content: right;
+    margin-top: 40px;
+}
+
+.createAccountBtn {
+    color: #007bff;
+    border-radius: 5px;
+    text-decoration: underline;
+    font-size: 18px;
+    font-weight: 500;
+    transition: background 0.3s, transform 0.3s;
+}
+
+    .createAccountBtn:hover {
+        color: #0056b3;
+    }
+
+.btn {
+    background-color: #007bff; 
+    color: white; 
+    border: none; 
+    border-radius: 5px;
+    padding: 8px 12px; 
+    cursor: pointer; 
+    text-decoration: none; 
+    display: inline-block; 
+    transition: background 0.3s, transform 0.3s; 
+    font-size: 12px;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+.btn-danger {
+    background-color: #dc3545; 
+}
+
+    .btn-danger:hover {
+        background-color: #c82333;
