@@ -147,12 +147,12 @@ namespace PizzaStore.Pages.CartItem
                 }
             }
 
-            return RedirectToPage("/Product/Menu");
+            return RedirectToPage("./Order/Order");
         }
 
         public async Task<IActionResult> OnPostPaymentCallBack()
         {
-            return RedirectToPage("/Product/Menu");
+            return RedirectToPage("./Order/Order");
         }
     }
 }

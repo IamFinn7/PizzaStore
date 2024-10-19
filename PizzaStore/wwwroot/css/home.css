@@ -65,6 +65,7 @@ header {
 }
 
 .btn:hover {
+    color: white;
     background: #e68a00;
     transform: scale(1.05);
 }

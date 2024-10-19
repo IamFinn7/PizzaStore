@@ -1,0 +1,68 @@
+﻿@page
+@model PizzaStore.Pages.Order.OrderModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/order.css">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section class="order">
+        <h3>Order List</h3>
+        <div class="table-container">
+            @if (!Model.Orders.Any())
+            {
+                <p colspan="8" style="text-align: center; color: red;">You have not completed any orders.</p>
+            }
+            else
+            {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width: 20%;">Customer Name</th>
+                        <th style="width: 25%;">Ship Address</th>
+                        <th>Freight</th>
+                        <th>Amount</th>
+                        <th>Order Date</th>
+                        <th>Required Date</th>
+                        <th>Shipped Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Orders)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Customer.ContactName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.ShipAddress)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Freight)</td>
+                            <td>
+                                @{
+                                    var totalAmount = item.OrderDetails.Sum(od => od.Quantity * od.UnitPrice);
+                                }
+                                @totalAmount
+                            </td>
+                            <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.RequiredDate.ToString("dd/MM/yyyy")</td>
+                            <td>@item.ShippedDate?.ToString("dd/MM/yyyy")</td>
+                            <td style="text-align: center;">
+                                <a class="btn" asp-page="./OrderDetails" asp-route-id="@item.OrderID">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }
+        </div>
+    </section>
+</body>
+</html>

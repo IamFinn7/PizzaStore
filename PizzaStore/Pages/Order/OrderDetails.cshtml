@@ -1,0 +1,61 @@
+﻿@page "{id:int}"
+@model PizzaStore.Pages.Order.OrderDetailsModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/orderDetails.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+    <section style="min-height:500px; margin-top: 30px">
+        <div class="order-detail">
+            <h3>Order Details</h3>
+
+            @if (Model.Order != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Order.OrderDetails.Any())
+                        {
+                            foreach (var detail in Model.Order.OrderDetails)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => detail.Product.ProductName)</td>
+                                    <td>@Html.DisplayFor(modelItem => detail.Quantity)</td>
+                                    <td>@Html.DisplayFor(modelItem => detail.UnitPrice)</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3">No Order Details Available</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Order not found.</p>
+            }
+
+            <a class="btn" asp-page="./Order">Back to Orders</a>
+        </div>
+    </section>
+</body>
+</html>
