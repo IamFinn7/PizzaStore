@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -30,9 +31,19 @@ namespace PizzaStore.Pages.Staff
             Account = account;
             return Page();
         }
-
+        [Authorize]
         public async Task<IActionResult> OnPostAsync()
         {
+            var adminAccount = await _context.Accounts.FirstOrDefaultAsync(it => it.Type == AccountType.Staff);
+            if (adminAccount.AccountID == Account.AccountID)
+            {
+                Account.Type = AccountType.Staff;
+            }
+            else
+            {
+                //Account.Type = AccountType.Member;
+                Account.Type = null;
+            }
             _context.Attach(Account).State = EntityState.Modified;
             try
             {

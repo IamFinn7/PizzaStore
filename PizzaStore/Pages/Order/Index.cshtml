@@ -1,0 +1,160 @@
+﻿@* @page
+@model PizzaStore.Pages.Order.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].RequiredDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].ShippedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].Freight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].ShipAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders[0].Customer)
+            </th>
+            <th>
+                @Html.DisplayName("Amount");
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Orders) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequiredDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Freight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerID)
+            </td>
+                <td>
+                    @{
+                        var totalAmount = item.OrderDetails.Sum(od => od.Quantity * od.UnitPrice);
+                    }
+                    @totalAmount 
+                </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.OrderID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.OrderID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.OrderID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
+
+
+@page
+@model PizzaStore.Pages.Order.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order Date</th>
+            <th>Required Date</th>
+            <th>Shipped Date</th>
+            <th>Freight</th>
+            <th>Ship Address</th>
+            <th>Customer ID</th>
+            <th>Customer Name</th>
+            <th>Amount</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.OrderDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.RequiredDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.ShippedDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.Freight)</td>
+                <td>@Html.DisplayFor(modelItem => item.ShipAddress)</td>
+                <td>@Html.DisplayFor(modelItem => item.Customer.CustomerID)</td>
+                <td>@Html.DisplayFor(modelItem => item.Customer.ContactName)</td>
+                <td>
+                    @{
+                        var totalAmount = item.OrderDetails.Sum(od => od.Quantity * od.UnitPrice);
+                    }
+                    @totalAmount
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.OrderID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.OrderID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.OrderID">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="8">
+                    @if (item.OrderDetails.Any())
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in item.OrderDetails)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(modelItem => detail.Product.ProductName)</td>
+                                        <td>@Html.DisplayFor(modelItem => detail.Quantity)</td>
+                                        <td>@Html.DisplayFor(modelItem => detail.UnitPrice)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p>No Order Details Available</p>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
