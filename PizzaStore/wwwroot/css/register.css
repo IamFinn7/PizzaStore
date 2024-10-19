@@ -1,15 +1,4 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Raleway", sans-serif;
-}
-
-body {
-    background: #fffbf6;
-}
-
-header {
+﻿header {
     background: #fff;
     padding: 15px;
     display: flex;
@@ -31,13 +20,13 @@ header {
     color: #302e29;
 }
 
-.login-container {
+.register-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login-box {
+.register-box {
     background: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -46,23 +35,23 @@ header {
     margin-top: 40px;
 }
 
-h2 {
+.register-box h2 {
     margin-bottom: 20px;
     text-align: center;
     color: #302e29;
 }
 
-.input-group {
+.register-input-group {
     margin-bottom: 15px;
 }
 
-label {
+.register-input-group label {
     display: block;
     margin-bottom: 5px;
     color: #302e29;
 }
 
-input {
+.register-input-group input {
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
@@ -70,12 +59,12 @@ input {
     font-size: 14px;
 }
 
-input:focus {
+.register-input-group input:focus {
     border-color: #ff9100;
     outline: none;
 }
 
-.btn {
+.register-box .btn {
     width: 100%;
     padding: 10px;
     background: #ff9100;
@@ -87,9 +76,9 @@ input:focus {
     transition: background 0.3s;
 }
 
-    .btn:hover {
-        background: #e68a00;
-    }
+.register-box .btn:hover {
+    background: #e68a00;
+}
 
 .register-link {
     text-align: center;

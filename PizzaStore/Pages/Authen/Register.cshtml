@@ -10,47 +10,38 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="~/css/register.css" />
+    <link rel="stylesheet" href="~/css/register.css"/>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-@*     <header>
-        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
-        <ul class="navbar">
-            <li><a asp-area="" asp-page="/Index">Home</a></li>
-            <li><a asp-area="" asp-page="/Product/Menu">Menu</a></li>
-            <li><a asp-area="" asp-page="/Authen/Login">Login</a></li>
-        </ul>
-    </header> *@
 
     <section>
-        <div class="login-container">
-            <div class="login-box" style="margin-bottom: 10px">
+        <div class="register-container">
+            <div class="register-box" style="margin-bottom: 10px">
                 <h2>Register</h2>
-                <form method="post">
-                    <div class="input-group">
-                        <label asp-for="Account.UserName" class="control-label"></label>
-                        <input asp-for="Account.UserName" class="form-control" required />
-                        <span asp-validation-for="Account.UserName" class="text-danger"></span>
+                 <form method="post">
+                    <div class="register-input-group">
+                        <label asp-for="Account.UserName"></label>
+                        <input asp-for="Account.UserName" required />
+                        <span asp-validation-for="Account.UserName"></span>
                     </div>
-                    <div class="input-group">
-                        <label asp-for="Account.FullName" class="control-label"></label>
-                        <input asp-for="Account.FullName" class="form-control" required />
-                        <span asp-validation-for="Account.FullName" class="text-danger"></span>
+                    <div class="register-input-group">
+                        <label asp-for="Account.FullName"></label>
+                        <input asp-for="Account.FullName" required />
+                        <span asp-validation-for="Account.FullName"></span>
                     </div>
-                    <div class="input-group">
-                        <label asp-for="Account.Password" class="control-label"></label>
-                        <input asp-for="Account.Password" type="password" class="form-control" required />
-                        <span asp-validation-for="Account.Password" class="text-danger"></span>
+                    <div class="register-input-group">
+                        <label asp-for="Account.Password"></label>
+                        <input asp-for="Account.Password" type="password" required />
+                        <span asp-validation-for="Account.Password"></span>
                     </div>
-                    <div class="input-group">
-                        <label for="ConfirmPassword" class="control-label">Confirm Password</label>
-                        <input name="ConfirmPassword" type="password" class="form-control" required />
+                    <div class="register-input-group">
+                        <label for="ConfirmPassword">Confirm Password</label>
+                        <input name="ConfirmPassword" type="password" required />
                         <span class="text-danger"></span>
                     </div>
+                    
                     <button type="submit" class="btn">Register</button>
                 </form>
                 <p class="register-link">
@@ -69,9 +60,26 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const usernameInput = document.querySelector('input[name="Account.UserName"]');
+            const passwordInput = document.querySelector('input[name="Account.Password"]');
+            const confirmPasswordInput = document.querySelector('input[name="ConfirmPassword"]');
+            const registerButton = document.querySelector('button[type="submit"]');
+
+            // Function to check if all required fields are filled
+            function checkFields() {
+                if (usernameInput.value && passwordInput.value && confirmPasswordInput.value) {
+                    registerButton.disabled = false;
+                } else {
+                    registerButton.disabled = true;
+                }
+            }
+
+            // Add event listeners to all input fields
+            usernameInput.addEventListener('input', checkFields);
+            passwordInput.addEventListener('input', checkFields);
+            confirmPasswordInput.addEventListener('input', checkFields);
+
             const usernameWarning = document.createElement('span');
             usernameInput.parentNode.appendChild(usernameWarning);
-
             let isUsernameValid = true;
 
             usernameInput.addEventListener('blur', function () {
@@ -82,7 +90,7 @@
                         .then(response => response.json())
                         .then(data => {
                             if (!data) {
-                                usernameWarning.textContent = `Username ${username} is already exists.`;
+                                usernameWarning.textContent = `Username ${username} already exists.`;
                                 usernameWarning.style.color = 'red';
                                 usernameWarning.style.fontSize = '14px';
                                 isUsernameValid = false;
@@ -100,8 +108,11 @@
 
             const form = document.querySelector('form');
             form.addEventListener('submit', function (event) {
-                const password = document.querySelector('input[name="Account.Password"]').value;
-                const confirmPassword = document.querySelector('input[name="ConfirmPassword"]').value;
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                // Ensure that the checkFields function has validated the fields
+                checkFields();
 
                 if (!isUsernameValid) {
                     event.preventDefault();
@@ -112,6 +123,9 @@
                 if (password !== confirmPassword) {
                     event.preventDefault();
                     alert("Passwords do not match. Please check again.");
+                } else if (usernameInput.value === '' || passwordInput.value === '' || confirmPasswordInput.value === '') {
+                    event.preventDefault();
+                    alert("Please fill in all required fields.");
                 } else {
                     alert("Account created successfully!");
 
@@ -122,5 +136,7 @@
             });
         });
     </script>
+
+
 </body>
 </html>

@@ -19,19 +19,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-   @*  <header>
-        <a href="#" class="logo"><img src="~/img/logo.png" alt="logo" /></a>
-        <ul class="navbar">
-            <li><a asp-area="" asp-page="/Index">Home</a></li>
-            @if (isStaff)
-            {
-                <li><a asp-area="" asp-page="/Staff/MenuStaff">Menu</a></li>
-                <li><a asp-area="" asp-page="/Staff/ManageAccount">Account</a></li>
-                <li><a asp-area="" asp-page="/Logout/Logout">Logout</a></li>
-            }
-        </ul>
-    </header> *@
-
     <section class="menu" id="menu">
         <div class="main-text">
             <h2>Edit Account</h2>
@@ -42,22 +29,36 @@
             <form method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Account.AccountID" />
-                <div class="input-group">
-                    <label asp-for="Account.UserName" class="control-label">Username:</label>
-                    <input asp-for="Account.UserName" class="form-control" />
-                    <span asp-validation-for="Account.UserName" class="text-danger"></span>
+                <div class="edit-input-group mb-3">
+                    <label asp-for="Account.UserName">Username:</label>
+                    <input asp-for="Account.UserName"/>
+                    <span asp-validation-for="Account.UserName"></span>
                 </div>
-                <div class="input-group">
-                    <label asp-for="Account.Password" class="control-label">Password:</label>
-                    <input asp-for="Account.Password" class="form-control" id="passwordInput"/>
-                    <span asp-validation-for="Account.Password" class="text-danger"></span>
-                    <button type="button" class="btn btn-secondary" onclick="togglePasswordVisibility()">Show</button>
+                <div class="edit-input-group mb-3">
+                    <label asp-for="Account.Password">Password:</label>
+                    <div class="edit-password" style="width: 100%; display: flex; align-items: center;">
+                        <input asp-for="Account.Password" id="passwordInput" class="password-input" style="width: 90%;  margin-right: 10px;" type="text" />
+                        <span asp-validation-for="Account.Password"></span>
+                        <button type="button"
+                                onclick="togglePasswordVisibility(this)"
+                                style="background: transparent;
+                                   border: none;
+                                   cursor: pointer;
+                                   margin-left: 10px;
+                                   font-size: 16px;
+                                   color: #007bff;
+                                   transition: color 0.3s ease;"
+                                onmouseover="this.style.color='#0056b3';"
+                                onmouseout="this.style.color='#007bff';">
+                            <i class='bx bx-hide'></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="input-group">
-                    <label asp-for="Account.FullName" class="control-label">Full Name:</label>
-                    <input asp-for="Account.FullName" class="form-control" />
-                    <span asp-validation-for="Account.FullName" class="text-danger"></span>
+                <div class="edit-input-group mb-3">
+                    <label asp-for="Account.FullName">Full Name:</label>
+                    <input asp-for="Account.FullName"/>
+                    <span asp-validation-for="Account.FullName"></span>
                 </div>
                 <button type="submit">Save Changes</button>
             </form>
@@ -72,16 +73,14 @@
 </body>
 </html>
 <script>
-    function togglePasswordVisibility() {
-        var passwordInput = document.getElementById('passwordInput');
-        var button = event.currentTarget;
-
+    function togglePasswordVisibility(button) {
+        var passwordInput = button.parentElement.querySelector('.password-input');
         if (passwordInput.type === "password") {
             passwordInput.type = "text";
-            button.textContent = "Hide";
+            button.innerHTML = "<i class='bx bx-hide'></i>";
         } else {
             passwordInput.type = "password";
-            button.textContent = "Show";
+            button.innerHTML = "<i class='bx bx-show'></i>";
         }
     }
 </script>

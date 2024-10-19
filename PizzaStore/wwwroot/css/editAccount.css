@@ -1,15 +1,4 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Raleway", sans-serif;
-}
-
-body {
-    background: #fffbf6;
-}
-
-header {
+﻿header {
     background: #fff;
     padding: 15px;
     display: flex;
@@ -48,10 +37,10 @@ h2 {
 .form-content {
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 10px;
 }
 
-form {
+.form-content form {
     background: #fff;
     border-radius: 8px;
     padding: 30px;
@@ -59,30 +48,27 @@ form {
     width: 500px;
 }
 
-.input-group {
-    margin-bottom: 20px;
-}
-
-label {
+.edit-input-group label {
     display: block;
     margin-bottom: 5px;
     color: #302e29;
 }
 
-input {
+.edit-input-group input {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
+    background: black;
 }
 
-    input:focus {
-        border-color: #007bff;
-        outline: none;
-    }
+.edit-input-group input:focus {
+    border-color: #007bff;
+    outline: none;
+}
 
-button[type="submit"] {
+.edit-input-group button[type="submit"] {
     width: 100%;
     padding: 12px;
     background: #007bff;
@@ -94,9 +80,9 @@ button[type="submit"] {
     transition: background 0.3s;
 }
 
-    button[type="submit"]:hover {
-        background: #0056b3;
-    }
+.edit-input-group button[type="submit"]:hover {
+    background: #0056b3;
+}
 
 .back-link {
     display: block;
@@ -107,7 +93,10 @@ button[type="submit"] {
     text-decoration: none;
 }
 
-    .back-link:hover {
-        text-decoration: underline;
-        color: #0056b3;
-    }
+.back-link:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+
+
