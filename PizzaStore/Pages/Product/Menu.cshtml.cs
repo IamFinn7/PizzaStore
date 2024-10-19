@@ -14,17 +14,28 @@ namespace PizzaStore.Pages.Product
 
         [BindProperty]
         public ProductVM SelectedProduct { get; set; } = new ProductVM();
-        public async Task OnGetAsync(string? searchTerm)
+        public async Task OnGetAsync(string? searchName, int? categoryId)
         {
             var query = _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Supplier)
                 .AsQueryable();
-            if (!string.IsNullOrEmpty(searchTerm))
+            if (!string.IsNullOrEmpty(searchName))
             {
-                query = query.Where(p => p.ProductName.Contains(searchTerm));
+                query = query.Where(p => p.ProductName.Contains(searchName));
             }
-
+            if (categoryId.HasValue && categoryId.Value > 0)
+            {
+                query = query.Where(p => p.CategoryID == categoryId.Value);
+            }
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryName");
+            ViewData["SearchName"] = searchName;
+            ViewData["SelectedCategoryId"] = categoryId;
+            var cateName = await _context.Categories
+                            .Where(it => it.CategoryID == categoryId)
+                            .Select(it => it.CategoryName)
+                            .FirstOrDefaultAsync();
+            ViewData["CategoryText"] = cateName;
             var results = await query.ToListAsync();
             Products = _mapper.Map<List<ProductVM>>(results);
         }

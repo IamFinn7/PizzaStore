@@ -4,6 +4,9 @@
     ViewData["Title"] = "Menu - Food Website";
     var isStaff = User.IsInRole("Staff");
     var isUser = User.IsInRole("Member");
+    var categoryIdAfter = ViewData["SelectedCategoryId"];
+    var cateName = ViewData["CategoryText"];
+    var searchNameAfter = ViewData["SearchName"];
 }
 
 <!DOCTYPE html>
@@ -19,60 +22,82 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    
-    <section class="menu" id="menu">
-        @if (isStaff)
-        {
-            <div class="createProduct">
-                <a href="/Staff/CreateProduct" class="createProductBtn">Create New Product</a>
-            </div>
-            <div class="menu-content">
-                @foreach (var product in Model.Products)
-                {
-                    <div class="menu-item">
-                        <img src="@product.ProductImage" alt="@product.ProductName">
-                        <div class="menu-text">
-                            <h5>@product.ProductName</h5>
-                            <h6>@String.Format("${0:F2}", product.UnitPrice)</h6>
-                        </div>
-                        <button class="edit-button" onclick="openEditPopup('@product.ProductID')">Edit</button>
-                    </div>
-                }
-            </div>
-        }
-        else
-        {
-            <div class="main-text">
-                <h2>Most Popular Pizza</h2>
-                <p>We have selected for You<br> the most exquisite tastes around the world</p>
-            </div>
-            <div class="menu-content">
-                @foreach (var product in Model.Products)
-                {
-                    <div class="menu-item">
-                        <span class="quantity-label">In Stock: @product.QuantityPerUnit</span>
-                        <img src="@product.ProductImage" alt="@product.ProductName">
-                        <div class="menu-text">
-                            <h5>@product.ProductName</h5>
-                            <h6>@String.Format("${0:F2}", product.UnitPrice)</h6>
-                        </div>
 
+    <section class="menu" id="menu" style="display: flex; width : 100%">
+        <div class="menu-sidebar" style="width: 250px; padding: 20px; background-color: #f5f5f5; border-right: 1px solid #ddd;">
+            <h4>Search Menu</h4>
+            <form id="search-form" method="get" action="/Product/Menu">
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <label for="search-name" style="display: block; margin-bottom: 5px; font-weight: bold;">Search by Name:</label>
+                    @if (searchNameAfter != null)
+                    {
+                        <input value="@searchNameAfter" type="text" id="search-name" name="searchName" placeholder="Enter product name"
+                               style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; ">
+                    }else{
+                        <input type="text" id="search-name" name="searchName" placeholder="Enter product name"
+                               style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; ">
+                    }
+                </div>
+
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <label for="search-category" style="display: block; margin-bottom: 5px; font-weight: bold;">Search by Category:</label>
+                    <select id="search-category" name="categoryId"
+                            style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="">All Categories</option>
+                        @if (categoryIdAfter != null)
+                        {
+                            <option value="@categoryIdAfter">@cateName</option>
+                        }
+                        @foreach (var category in ViewBag.CategoryID)
+                        {
+                            <option value="@category.Value">@category.Text</option>
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="search-btn" style="width: 100%; padding: 10px; background-color: #ff5722; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    Search
+                </button>
+            </form>
+        </div>
+
+        <div class="menu-content" style="flex: 1; padding: 20px;">
+            @if (isStaff)
+            {
+                <div class="createProduct" style="margin-bottom: 20px;">
+                    <a href="/Staff/CreateProduct" class="createProductBtn" style="padding: 10px 20px; background-color: #4caf50; color: white; text-decoration: none; border-radius: 4px;">Create New Product</a>
+                </div>
+            }
+            @foreach (var product in Model.Products)
+            {
+                <div class="menu-item" style="margin-bottom: 30px;">
+                    <img src="@product.ProductImage" alt="@product.ProductName" style="width: 100px; height: auto;">
+                    <div class="menu-text" style="margin-top: 10px;">
+                        <h5 style="margin: 0; font-size: 1.2rem;">@product.ProductName</h5>
+                        <h6 style="margin: 5px 0; font-size: 1rem;">@String.Format("${0:F2}", product.UnitPrice)</h6>
+                    </div>
+                    @if (isStaff)
+                    {
+                        <button class="edit-button" onclick="openEditPopup('@product.ProductID')" style="padding: 5px 10px; background-color: #ff9800; color: white; border: none; border-radius: 4px; cursor: pointer;">Edit</button>
+                    }
+                    else
+                    {
                         <form method="post" asp-page-handler="AddToCart" id="form_@product.ProductID" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#cart-response">
-                            <div class="quantity-container">
-                                <input type="number" name="quantity" id="quantity_@product.ProductID" min="1" value="1" class="quantity-input" />
+                            <div class="quantity-container" style="margin-top: 10px;">
+                                <input type="number" name="quantity" id="quantity_@product.ProductID" min="1" value="1" class="quantity-input" style="width: 60px; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
                             </div>
-                            <input type="hidden" name="productId" value="@product.ProductID" />
-                            <input type="hidden" id="availableQuantity_@product.ProductID" value="@product.QuantityPerUnit" />
-                            <div class="form-group">
-                                <input type="submit" value="Add to Cart" class="add-to-cart"
-                                @(product.QuantityPerUnit < 1 ? "disabled" : "") />
+                            <input type="hidden" name="productId" value="@product.ProductID">
+                            <input type="hidden" id="availableQuantity_@product.ProductID" value="@product.QuantityPerUnit">
+                            <div class="form-group" style="margin-top: 10px;">
+                                <input type="submit" value="Add to Cart" class="add-to-cart" style="padding: 5px 10px; background-color: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;" @(product.QuantityPerUnit < 1 ? "disabled" : "") />
                             </div>
                         </form>
-                    </div>
-                }
-            </div>
-        }
+                    }
+                </div>
+            }
+        </div>
     </section>
+
 
     <div id="edit-popup" class="popup" style="display: none;">
         <div class="popup-content">
@@ -150,6 +175,15 @@
             });
         });
     });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var categoryIdAfter = '@categoryIdAfter';
+
+            if (categoryIdAfter) {
+                var selectElement = document.getElementById('search-category');
+                selectElement.value = categoryIdAfter; 
+            }
+        });
     </script>
 </body>
 </html>
