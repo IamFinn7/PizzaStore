@@ -11,7 +11,7 @@ namespace PizzaStore
         {
             services.AddDbContext<PizzaContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("PizzaStore")));
             services.AddTransient(typeof(IUploadImageService), typeof(UploadImageService));
-            services.AddSingleton<IAuthService, AuthService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddAutoMapper(typeof(MappingProfile).Assembly);
             services.Configure<FireBaseOptions>(configuration.GetSection("FireBase"));
             services.AddHttpContextAccessor();
