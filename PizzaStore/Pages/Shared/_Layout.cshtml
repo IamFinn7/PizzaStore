@@ -20,6 +20,7 @@
              @if (isStaff || isUser)
             {
             <li><a href="#">Hello @User.Identity.Name</a></li>
+            <li><a asp-area="" asp-page="/Order/Index">View Order</a></li>
             }
             <li><a asp-area="" asp-page="/Index">Home</a></li>
             @if (isStaff)

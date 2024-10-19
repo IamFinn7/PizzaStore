@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using PizzaStore.Data;
 using PizzaStore.Models;
 
-namespace PizzaStore.Pages.Accounts
+namespace PizzaStore.Pages.Order
 {
     public class EditModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace PizzaStore.Pages.Accounts
         }
 
         [BindProperty]
-        public Account Account { get; set; } = default!;
+        public Orders Orders { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,27 +30,34 @@ namespace PizzaStore.Pages.Accounts
                 return NotFound();
             }
 
-            var account =  await _context.Accounts.FirstOrDefaultAsync(m => m.AccountID == id);
-            if (account == null)
+            var orders =  await _context.Orders.FirstOrDefaultAsync(m => m.OrderID == id);
+            if (orders == null)
             {
                 return NotFound();
             }
-            Account = account;
+            Orders = orders;
+           ViewData["CustomerID"] = new SelectList(_context.Customers, "CustomerID", "CustomerID");
             return Page();
         }
 
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            _context.Attach(Account).State = EntityState.Modified;
-            Account accEdit = new Account();
-            accEdit = Account;
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            _context.Attach(Orders).State = EntityState.Modified;
+
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AccountExists(Account.AccountID))
+                if (!OrdersExists(Orders.OrderID))
                 {
                     return NotFound();
                 }
@@ -59,12 +66,13 @@ namespace PizzaStore.Pages.Accounts
                     throw;
                 }
             }
+
             return RedirectToPage("./Index");
         }
 
-        private bool AccountExists(int id)
+        private bool OrdersExists(int id)
         {
-            return _context.Accounts.Any(e => e.AccountID == id);
+            return _context.Orders.Any(e => e.OrderID == id);
         }
     }
 }
