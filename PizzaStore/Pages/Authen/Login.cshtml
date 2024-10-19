@@ -19,28 +19,29 @@
 <body>
 
     <section>
-        <div class="pizza-login-container">
-            <div class="pizza-login-box">
-                <h2 class="pizza-h2">Login</h2>
+        <div class="login-container">
+            <div class="login-box">
+                <h2>Login</h2>
                 <form method="post">
-                    <div class="pizza-input-group">
-                        <label asp-for="Username" class="pizza-label"></label>
-                        <input asp-for="Username" class="pizza-input" required />
+                    <div class="input-group" style="margin-bottom: 15px;">
+                        <label asp-for="Username" class="control-label" style="display: block; margin-bottom: 5px;"></label>
+                        <input asp-for="Username" class="form-control" required style="width: 100%;" />
                         <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
-                    <div class="pizza-input-group">
-                        <label asp-for="Password" class="pizza-label"></label>
-                        <input asp-for="Password" type="password" class="pizza-input" required />
+                    <div class="input-group" style="margin-bottom: 15px;">
+                        <label asp-for="Password" class="control-label" style="display: block; margin-bottom: 5px;"></label>
+                        <input asp-for="Password" type="password" class="form-control" required style="width: 100%;" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
-                    <button type="submit" class="pizza-btn">Login</button>
+                    <button type="submit" class="btn">Login</button>
                 </form>
-                <p class="pizza-register-link">
+                <p class="register-link">
                     Don't have an account? <a asp-area="" asp-page="/Authen/Register">Register here</a>
                 </p>
             </div>
         </div>
     </section>
+
 
 
     @section Scripts {
