@@ -37,12 +37,6 @@ header {
     margin-bottom: 30px;
 }
 
-.menu-content {
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: space-between;
-}
-
 .menu-item {
     background: #fff;
     border-radius: 8px;
