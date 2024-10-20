@@ -1,21 +1,25 @@
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using PizzaStore.Helpers;
+using System.Configuration;
 
 namespace PizzaStore.Pages.Product
 {
-    public class MenuModel(PizzaContext context, IMapper mapper) : PageModel
+    public class MenuModel(PizzaContext context, IMapper mapper, IConfiguration configuration) : PageModel
     {
         private readonly PizzaContext _context = context;
         private readonly IMapper _mapper = mapper;
-        public IList<ProductVM> Products { get; set; } = default!;
+        private readonly IConfiguration _configuration = configuration;
+        public PaginatedList<ProductVM> Products { get; set; }
 
         [BindProperty]
         public ProductVM SelectedProduct { get; set; } = new ProductVM();
-        public async Task OnGetAsync(string? searchName, int? categoryId)
+        public async Task OnGetAsync(string? searchName, int? categoryId, int? pageIndex)
         {
+            pageIndex = pageIndex ?? 1;
             var query = _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Supplier)
@@ -36,9 +40,10 @@ namespace PizzaStore.Pages.Product
                             .Select(it => it.CategoryName)
                             .FirstOrDefaultAsync();
             ViewData["CategoryText"] = cateName;
-            var results = await query.ToListAsync();
-            Products = _mapper.Map<List<ProductVM>>(results);
+            var pageSize = _configuration.GetValue("PageSize", 3);
+            Products = await PaginatedList<ProductVM>.CreateAsync(query.Select(p => _mapper.Map<ProductVM>(p)), pageIndex.Value, pageSize);
         }
+
 
         public async Task<IActionResult> OnGetEditAsync(int productId)
         {

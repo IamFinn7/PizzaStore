@@ -97,6 +97,34 @@
             }
         </div>
     </section>
+    @{
+        var prevDisabled = !Model.Products.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.Products.HasNextPage ? "disabled" : "";
+        var totalPages = Model.Products.TotalPages;
+    }
+
+    <div class="pagination">
+        <a asp-page="/Product/Menu"
+           asp-route-pageIndex="@(Model.Products.PageIndex - 1)"
+           class="btn btn-primary @prevDisabled">
+            Previous
+        </a>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <a asp-page="/Product/Menu"
+               asp-route-pageIndex="@i"
+               class="btn btn-secondary @(Model.Products.PageIndex == i ? "active" : "")">
+                @i
+            </a>
+        }
+
+        <a asp-page="/Product/Menu"
+           asp-route-pageIndex="@(Model.Products.PageIndex + 1)"
+           class="btn btn-primary @nextDisabled">
+            Next
+        </a>
+    </div>
 
 
     <div id="edit-popup" class="popup" style="display: none;">
