@@ -34,8 +34,8 @@ namespace PizzaStore.Pages.Staff
         [Authorize]
         public async Task<IActionResult> OnPostAsync()
         {
-            var account = await _context.Accounts.SingleOrDefaultAsync(it => it.UserName == User.Identity.Name);
-            var adminAccount = await _context.Accounts.FirstOrDefaultAsync(it => it.Type == AccountType.Staff);
+            var account = await _context.Accounts.AsNoTracking().SingleOrDefaultAsync(it => it.UserName == User.Identity.Name);
+            var adminAccount = await _context.Accounts.AsNoTracking().FirstOrDefaultAsync(it => it.Type == AccountType.Staff);
             var isStaff = User.IsInRole("Staff");
             if (adminAccount.AccountID == Account.AccountID && isStaff)
             {
@@ -44,6 +44,10 @@ namespace PizzaStore.Pages.Staff
             else if (account.Type == AccountType.Member)
             {
                 Account.Type = AccountType.Member;
+            }
+            else if(account.Type == null)
+            {
+                Account.Type = null;
             }
             else
             {

@@ -34,7 +34,8 @@ namespace PizzaStore.Pages.Authen
                 UserName = Account.UserName,
                 FullName = Account.FullName,
                 Password = Account.Password,
-                Type = AccountType.Member,
+                Type = null
+                //Type = AccountType.Member,
             };
 
             _context.Accounts.Add(accountDto);

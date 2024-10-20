@@ -1,0 +1,46 @@
+﻿@page
+@model PizzaStore.Pages.VnPay.VnPayResponseModel
+@{
+    ViewData["Title"] = "Payment Result";
+}
+
+<h1>Payment Result</h1>
+
+@if (Model.IsSuccess)
+{
+    <div style="text-align: center; margin-top: 20px;">
+        <span style="color: green; font-size: 100px;">
+            &#10004;
+        </span>
+        <p style="font-size: 24px;">@Model.PaymentMessage</p>
+    </div>
+}
+else
+{
+    <div style="color: red;">
+        <p>@TempData["Message"]</p>
+    </div>
+}
+<div style="text-align: center; margin-top: 30px;">
+    <p>Redirecting to home page in <span id="countdown">15</span> seconds...</p>
+</div>
+
+<div style="text-align: center; margin-top: 10px;">
+    <a asp-page="/Product/Index"
+       style="font-size: 24px; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
+        Back to Home
+    </a>
+</div>
+
+<script>
+    var seconds = 15;
+    var countdownElement = document.getElementById('countdown');
+    var interval = setInterval(function() {
+        seconds--;
+        countdownElement.textContent = seconds;
+        if (seconds <= 0) {
+            clearInterval(interval);
+            window.location.href = '/Product/Index';
+        }
+    }, 1000);
+</script>

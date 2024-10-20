@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using PizzaStore.Utility.VNPAY;
 
 namespace PizzaStore
 {
@@ -49,6 +50,7 @@ namespace PizzaStore
             builder.Services.AddRazorPages();
          
             builder.Services.AddPizzaStoreServices(builder.Configuration);
+            builder.Services.AddSingleton<IVnPayService, VnPayService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

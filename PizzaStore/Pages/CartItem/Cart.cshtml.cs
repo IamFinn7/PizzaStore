@@ -1,16 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
+using PizzaStore.Utility.VNPAY;
 
 namespace PizzaStore.Pages.CartItem
 {
     public class CartModel : PageModel
     {
         private readonly PizzaStore.Data.PizzaContext _context;
-
-        public CartModel(PizzaStore.Data.PizzaContext context)
+        private readonly IVnPayService _vnPayService;
+        public CartModel(PizzaStore.Data.PizzaContext context, IVnPayService vnPayService)
         {
             _context = context;
+            _vnPayService = vnPayService;
         }
 
         public List<CartItems> CartItems { get; set; } = new List<CartItems>();
@@ -29,7 +31,7 @@ namespace PizzaStore.Pages.CartItem
                     var cart = await _context.Carts
                         .FirstOrDefaultAsync(c => c.AccountID == account.AccountID);
 
-                    if (cart != null)
+                    if (cart != null) 
                     {
                         CartItems = JsonConvert.DeserializeObject<List<CartItems>>(cart.CartItemsJson) ?? new List<CartItems>();
                         TotalPrice = CartItems.Sum(item => item.Price * item.Quantity);
@@ -74,7 +76,7 @@ namespace PizzaStore.Pages.CartItem
             return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostCheckoutAsync(DateTime requiredDate, string address, string phone, string contactName)
+        public async Task<IActionResult> OnPostCheckoutAsync(DateTime requiredDate, string address, string phone, string contactName, string paymentType = "COD")
         {
             var accountName = User.Identity.Name;
             // vnpay here
@@ -112,7 +114,21 @@ namespace PizzaStore.Pages.CartItem
                         {
                             cus = customerExist;
                         }
-
+                        Random random = new Random();
+                        var cartTotal = cartItems.Sum(it => it.Price * it.Quantity) * 1000;
+                        // VnPay Here
+                        if (paymentType == "VNPAY")
+                        {
+                            var vnPayModel = new VnPaymentRequestModel
+                            {
+                                Amount = (Double)cartTotal,
+                                CreatedDate = DateTime.UtcNow,
+                                Description = $"{account.FullName} - {phone}",
+                                FullName = contactName,
+                                OrderId = random.Next(1000, 100000),
+                            };
+                            return Redirect(_vnPayService.CreatePaymentUrl(HttpContext, vnPayModel));
+                        }
                         // Add ORDER
                         Orders orders = new Orders
                         {
@@ -147,11 +163,6 @@ namespace PizzaStore.Pages.CartItem
                 }
             }
 
-            return RedirectToPage("./Order/Order");
-        }
-
-        public async Task<IActionResult> OnPostPaymentCallBack()
-        {
             return RedirectToPage("./Order/Order");
         }
     }

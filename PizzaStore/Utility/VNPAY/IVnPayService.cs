@@ -2,7 +2,7 @@
 {
     public interface IVnPayService
     {
-        string CreatePaymentUrl(HttpContext content, VnPaymentResponseModel model);
+        string CreatePaymentUrl(HttpContext content, VnPaymentRequestModel model);
         VnPaymentResponseModel PaymentExecute(IQueryCollection collections);
     }
 }

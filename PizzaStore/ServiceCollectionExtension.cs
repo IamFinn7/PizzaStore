@@ -9,12 +9,12 @@ namespace PizzaStore
     {
         public static IServiceCollection AddPizzaStoreServices(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddDbContext<PizzaContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("PizzaStore")));
-            services.AddDbContext<PizzaContext>(options =>
-            {
-                options.UseSqlServer(configuration.GetConnectionString("PizzaStore"))
-                       .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-            });
+            services.AddDbContext<PizzaContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("PizzaStore")));
+            //services.AddDbContext<PizzaContext>(options =>
+            //{
+            //    options.UseSqlServer(configuration.GetConnectionString("PizzaStore"))
+            //           .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            //});
 
             services.AddTransient(typeof(IUploadImageService), typeof(UploadImageService));
             services.AddScoped<IAuthService, AuthService>();
