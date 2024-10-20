@@ -112,7 +112,7 @@ namespace PizzaStore.Pages.CartItem
                                 Password = account.Password,
                                 Phone = phone,
                             };
-
+                            account.Type = AccountType.Member;
                             await _context.Customers.AddAsync(cus);
                             await _context.SaveChangesAsync();
                         }

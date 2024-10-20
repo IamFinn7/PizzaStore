@@ -34,18 +34,24 @@ namespace PizzaStore.Pages.Staff
         [Authorize]
         public async Task<IActionResult> OnPostAsync()
         {
+            var account = await _context.Accounts.SingleOrDefaultAsync(it => it.UserName == User.Identity.Name);
             var adminAccount = await _context.Accounts.FirstOrDefaultAsync(it => it.Type == AccountType.Staff);
-            if (adminAccount.AccountID == Account.AccountID)
+            var isStaff = User.IsInRole("Staff");
+            if (adminAccount.AccountID == Account.AccountID && isStaff)
             {
                 Account.Type = AccountType.Staff;
             }
+            else if (account.Type == AccountType.Member)
+            {
+                Account.Type = AccountType.Member;
+            }
             else
             {
-                //Account.Type = AccountType.Member;
                 Account.Type = null;
             }
             _context.Attach(Account).State = EntityState.Modified;
             try
+           
             {
                 await _context.SaveChangesAsync();
             }
