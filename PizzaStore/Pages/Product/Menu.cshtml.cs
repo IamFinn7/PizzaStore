@@ -4,19 +4,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PizzaStore.Helpers;
+using PizzaStore.Utility;
 using System.Configuration;
 
 namespace PizzaStore.Pages.Product
 {
-    public class MenuModel(PizzaContext context, IMapper mapper, IConfiguration configuration) : PageModel
+    public class MenuModel(PizzaContext context, IMapper mapper, IConfiguration configuration, IUploadImageService uploadImageService) : PageModel
     {
         private readonly PizzaContext _context = context;
         private readonly IMapper _mapper = mapper;
         private readonly IConfiguration _configuration = configuration;
+        private readonly IUploadImageService _uploadImageService = uploadImageService;
+
         public PaginatedList<ProductVM> Products { get; set; }
 
         [BindProperty]
         public ProductVM SelectedProduct { get; set; } = new ProductVM();
+        [BindProperty]
+        public IFormFile File { get; set; } = default!;
         public async Task OnGetAsync(string? searchName, int? categoryId, int? pageIndex)
         {
             pageIndex = pageIndex ?? 1;
@@ -40,6 +45,7 @@ namespace PizzaStore.Pages.Product
                             .Select(it => it.CategoryName)
                             .FirstOrDefaultAsync();
             ViewData["CategoryText"] = cateName;
+            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "SupplierID", "CompanyName");
             var pageSize = _configuration.GetValue("PageSize", 3);
             Products = await PaginatedList<ProductVM>.CreateAsync(query.Select(p => _mapper.Map<ProductVM>(p)), pageIndex.Value, pageSize);
         }
@@ -54,6 +60,8 @@ namespace PizzaStore.Pages.Product
             }
 
             var productVm = _mapper.Map<ProductVM>(product);
+            ViewData["SupplierID"] = new SelectList(_context.Suppliers, "SupplierID", "CompanyName");
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "CategoryName");
             return new JsonResult(productVm);
         }
 
@@ -67,7 +75,18 @@ namespace PizzaStore.Pages.Product
 
             productToUpdate.ProductName = SelectedProduct.ProductName;
             productToUpdate.UnitPrice = SelectedProduct.UnitPrice;
-            productToUpdate.ProductImage = SelectedProduct.ProductImage;
+            productToUpdate.QuantityPerUnit = SelectedProduct.QuantityPerUnit;
+            productToUpdate.SupplierID = SelectedProduct.SupplierID;
+            productToUpdate.CategoryID = SelectedProduct.CategoryID;
+            if(this.File != null)
+            {
+            productToUpdate.ProductImage = await _uploadImageService.UploadImage(this.File);
+            }
+            else
+            {
+                productToUpdate.ProductImage = SelectedProduct.ProductImage;
+            }
+
 
             try
             {
